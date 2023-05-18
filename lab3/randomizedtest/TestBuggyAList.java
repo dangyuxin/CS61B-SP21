@@ -44,15 +44,15 @@ public class TestBuggyAList {
                 broken.addLast(randVal);
                 System.out.println("addLast(" + randVal + ")");
             } else if (operationNumber == 1) {
-                assertEquals(correct.size(), broken.size());
+                if (correct.size()==0||broken.size()==0)
+                    continue;
+                assertEquals(correct.removeLast(), broken.removeLast());
             } else if (operationNumber == 2) {
                 if (correct.size()==0||broken.size()==0)
                     continue;
                 assertEquals(correct.getLast(), broken.getLast());
             } else if (operationNumber == 3) {
-                if (correct.size()==0||broken.size()==0)
-                    continue;
-                assertEquals(correct.removeLast(), broken.removeLast());
+                assertEquals(correct.size(), broken.size());
             }
 
         }
