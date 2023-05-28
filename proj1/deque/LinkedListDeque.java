@@ -1,9 +1,16 @@
 package deque;
 
 import java.lang.reflect.Type;
+import java.util.Iterator;
 
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T> ,Iterable<T>{
     private int size;
+    private final Node sentinel;
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
+    }
 
     private class Node {
         T val;
@@ -20,7 +27,9 @@ public class LinkedListDeque<T> {
         }
     }
 
-    private Node sentinel = new Node();
+    public LinkedListDeque() {
+        sentinel = new Node();
+    }
 
 
     public boolean isEmpty() {
@@ -50,8 +59,7 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
-        if (isEmpty())
-            return null;
+        if (isEmpty()) return null;
         T res = sentinel.next.val;
         sentinel.next.next.pre = sentinel;
         sentinel.next = sentinel.next.next;
@@ -60,8 +68,7 @@ public class LinkedListDeque<T> {
     }
 
     public T removeLast() {
-        if (isEmpty())
-            return null;
+        if (isEmpty()) return null;
         T res = sentinel.pre.val;
         sentinel.pre.pre.next = sentinel;
         sentinel.pre = sentinel.pre.pre;
@@ -70,12 +77,21 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        if (size - 1 < index)
-            return null;
+        if (size <= index) return null;
         Node t = sentinel.next;
         for (int i = 0; i < index; i++)
             t = t.next;
         return t.val;
+    }
+
+    public T getRecursive(int index) {
+        if (size <= index) return null;
+        return helper(sentinel.next, index);
+    }
+
+    public T helper(Node t, int index) {
+        if (index == 0) return t.val;
+        return helper(t.next, index - 1);
     }
 
     public void printDeque() {
@@ -90,22 +106,15 @@ public class LinkedListDeque<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null)
-            return false;
-        if (o == this)
-            return true;
-        if (!(o instanceof LinkedListDeque))
-            return false;
+        if (o == null) return false;
+        if (o == this) return true;
+        if (!(o instanceof LinkedListDeque)) return false;
         LinkedListDeque<?> lld = (LinkedListDeque<?>) o;
-        if (this.getClass() != lld.getClass())
-            return false;
-        if(this.getClass().isAssignableFrom(lld.getClass()))
-            return false;
-        if (lld.size() != size)
-            return false;
+        if (this.getClass() != lld.getClass()) return false;
+        if (this.getClass().isAssignableFrom(lld.getClass())) return false;
+        if (lld.size() != size) return false;
         for (int i = 0; i < size; i++)
-            if (lld.get(i) != get(i))
-                return false;
+            if (lld.get(i) != get(i)) return false;
         return true;
     }
 }

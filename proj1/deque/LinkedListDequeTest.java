@@ -124,4 +124,18 @@ public class LinkedListDequeTest {
         LinkedListDeque<String> bbb = new LinkedListDeque<>();
         assertFalse(aaa.equals(bbb));
     }
+
+    @Test
+    public  void getRecursiveTest(){
+        LinkedListDeque<Integer> aaa = new LinkedListDeque<>();
+        aaa.addFirst(10);
+        aaa.addFirst(20);
+        aaa.addFirst(30);
+        aaa.printDeque();
+        System.out.println(aaa.getRecursive(0));
+        System.out.println(aaa.getRecursive(1));
+        System.out.println(aaa.getRecursive(2));
+        System.out.println(aaa.getRecursive(3));
+        System.out.println(aaa.getRecursive(-1));
+    }
 }
