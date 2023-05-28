@@ -1,7 +1,5 @@
 package deque;
 
-import org.checkerframework.checker.units.qual.C;
-
 public class ArrayDeque<T> implements Deque<T> {
 
     private int size;
