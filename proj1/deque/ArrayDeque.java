@@ -31,15 +31,24 @@ public class ArrayDeque<T> implements Deque<T> {
     public void resize(int Cap) {
         T[] tmp = (T[]) new Object[Cap];
         int j = rear;
-        while (j != front) {
-            j = minus(j);
+        if (rear >= Cap) {
+            while (rear != front) {
+                rear = minus(rear);
+                tmp[rear-front] = val[rear];
+            }
+            Capacity = Cap;
+            val=tmp;
+            front=0;
+            rear=front+size;
+        } else {
+            while (j != front) {
+                j = minus(j);
+                tmp[j] = val[j];
+            }
             tmp[j] = val[j];
+            val = tmp;
+            Capacity = Cap;
         }
-        tmp[j] = val[j];
-        val = tmp;
-        Capacity = Cap;
-        if(rear>=Cap)
-            rear=0;
     }
 
 
