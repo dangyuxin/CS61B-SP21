@@ -17,45 +17,33 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     public int minus(int step) {
-        if (step % Capacity == 0)
-            return Capacity - 1;
+        if (step % Capacity == 0) return Capacity - 1;
         return step - 1;
     }
 
     public int plus(int step) {
-        if ((step + 1) % Capacity == 0)
-            return 0;
+        if ((step + 1) % Capacity == 0) return 0;
         return step + 1;
     }
 
     public void resize(int Cap) {
         T[] tmp = (T[]) new Object[Cap];
-        int j = rear;
-        if (rear >= Cap) {
-            while (rear != front) {
-                rear = minus(rear);
-                tmp[rear-front] = val[rear];
-            }
-            Capacity = Cap;
-            val=tmp;
-            front=0;
-            rear=front+size;
-        } else {
-            while (j != front) {
-                j = minus(j);
-                tmp[j] = val[j];
-            }
-            tmp[j] = val[j];
-            val = tmp;
-            Capacity = Cap;
+        int j = 0;
+        while (front != rear) {
+            tmp[j] = val[front];
+            front = plus(front);
+            j++;
         }
+        val = tmp;
+        Capacity = Cap;
+        front = 0;
+        rear = j;
     }
 
 
     @Override
     public void addFirst(T item) {
-        if (isFull())
-            resize(Capacity * 2);
+        if (isFull()) resize(Capacity * 2);
         front = minus(front);
         val[front] = item;
         size++;
@@ -63,8 +51,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public void addLast(T item) {
-        if (isFull())
-            resize(Capacity * 2);
+        if (isFull()) resize(Capacity * 2);
         val[rear] = item;
         rear = plus(rear);
         size++;
@@ -97,10 +84,8 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T removeFirst() {
-        if (isEmpty())
-            return null;
-        if (Capacity >= 16 && size <= Capacity / 4)
-            resize(Capacity / 2);
+        if (isEmpty()) return null;
+        if (Capacity >= 16 && size <= Capacity / 4) resize(Capacity / 2);
         T res = val[front];
         front = plus(front);
         size--;
@@ -109,10 +94,8 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T removeLast() {
-        if (isEmpty())
-            return null;
-        if (Capacity >= 16 && size <= Capacity / 4)
-            resize(Capacity / 2);
+        if (isEmpty()) return null;
+        if (Capacity >= 16 && size <= Capacity / 4) resize(Capacity / 2);
         rear = minus(rear);
         T res = val[rear];
         size--;
@@ -121,8 +104,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T get(int index) {
-        if (size <= index)
-            return null;
+        if (size <= index) return null;
         return val[(front + index) % Capacity];
     }
 }
