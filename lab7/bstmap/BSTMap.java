@@ -34,7 +34,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return containsKey(root, key);
     }
 
-    public boolean containsKey(Node root, K key) {
+    private boolean containsKey(Node root, K key) {
         if (root == null) return false;
         int cmp = key.compareTo(root.key);
         if (cmp < 0) return containsKey(root.left, key);
@@ -47,7 +47,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return get(root, key);
     }
 
-    public V get(Node root, K key) {
+    private V get(Node root, K key) {
         if (root == null) return null;
         int cmp = key.compareTo(root.key);
         if (cmp < 0) return get(root.left, key);
@@ -66,7 +66,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         size++;
     }
 
-    public Node put(Node root, K key, V value) {
+    private Node put(Node root, K key, V value) {
         if (root == null) return new Node(key, value);
         int cmp = key.compareTo(root.key);
         if (cmp < 0) root.left = put(root.left, key, value);
@@ -83,14 +83,14 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return set;
     }
 
-    public void addkeys(Node root, HashSet set) {
+    private void addkeys(Node root, HashSet set) {
         if (root == null) return;
         set.add(root.key);
         addkeys(root.right, set);
         addkeys(root.left, set);
     }
 
-    public Node findMax(Node root) {
+    private Node findMax(Node root) {
         if (root.right == null) return root;
         return findMax(root.right);
     }
@@ -104,7 +104,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return res;
     }
 
-    public Node remove(Node root, K key) {
+    private Node remove(Node root, K key) {
         if (root == null) return null;
         int cmp = key.compareTo(root.key);
         if (cmp < 0) root.left = remove(root.left, key);
